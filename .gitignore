@@ -332,3 +332,5 @@ ASALocalRun/
 Output/
 APIKeysLocal.cs
 ResXManager.config.xml
+# Local build helpers (FFmpeg, ExifTool archives and extracted payloads)
+tools/
