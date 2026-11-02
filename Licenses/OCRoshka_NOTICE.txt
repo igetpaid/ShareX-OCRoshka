@@ -1,0 +1,25 @@
+﻿OCRoshka edition of ShareX
+==========================
+
+This is an unofficial fork of ShareX (https://github.com/ShareX/ShareX).
+The fork and its modifications are distributed under the GNU General Public
+License v3.0, the same license as ShareX. See LICENSE.txt.
+
+The bundled text recognition engine is Tesseract OCR 5.4.0, licensed under
+the Apache License 2.0. The full license text is in Tesseract_license.txt.
+Language data (rus.traineddata, eng.traineddata) comes from tessdata_best,
+also Apache License 2.0. https://github.com/tesseract-ocr/tessdata_best
+
+Native libraries bundled with Tesseract (Leptonica, libarchive, libtiff,
+zlib, libjpeg-turbo, OpenSSL, libpng, libwebp, brotli, cairo, freetype,
+harfbuzz) are covered by their respective licenses:
+  Leptonica      BSD-2-Clause   https://github.com/DanBloomberg/leptonica
+  libarchive     BSD-2-Clause   https://github.com/libarchive/libarchive
+  libtiff        libtiff        https://gitlab.com/libtiff/libtiff
+  zlib           zlib           https://zlib.net
+  libjpeg-turbo  BSD-3-Clause   https://libjpeg-turbo.org
+  OpenSSL        Apache-2.0     https://www.openssl.org
+  libpng         libpng         http://www.libpng.org
+
+ShareX is a trademark of the ShareX Team. This fork is not affiliated with,
+endorsed by, or supported by the ShareX Team.
