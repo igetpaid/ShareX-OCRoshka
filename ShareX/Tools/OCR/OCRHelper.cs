@@ -36,6 +36,7 @@ using Windows.Globalization;
 using Windows.Graphics.Imaging;
 using Windows.Media.Ocr;
 using Windows.Storage.Streams;
+using OCRoshka.Engine;
 
 namespace ShareX
 {
@@ -47,7 +48,7 @@ namespace ShareX
         {
             get
             {
-                return Helpers.OSVersion >= new Version(SupportedVersion);
+                return ShareXHook.IsAvailable || Helpers.OSVersion >= new Version(SupportedVersion);
             }
         }
 
@@ -55,6 +56,13 @@ namespace ShareX
         {
             get
             {
+                if (ShareXHook.IsAvailable)
+                {
+                    return ShareXHook.AvailableLanguages
+                        .Select(x => new OCRLanguage(x.DisplayName, x.Code))
+                        .ToArray();
+                }
+
                 ThrowIfNotSupported();
 
                 return OcrEngine.AvailableRecognizerLanguages.Select(x => new OCRLanguage(x.DisplayName, x.LanguageTag)).ToArray();
@@ -70,6 +78,16 @@ namespace ShareX
         }
 
         public static async Task<string> OCR(Bitmap bmp, string languageTag = "en", float scaleFactor = 1f, bool singleLine = false)
+        {
+            if (ShareXHook.IsAvailable)
+            {
+                return await ShareXHook.RecognizeAsync(bmp, singleLine);
+            }
+
+            return await OCRWindows(bmp, languageTag, scaleFactor, singleLine);
+        }
+
+        private static async Task<string> OCRWindows(Bitmap bmp, string languageTag = "en", float scaleFactor = 1f, bool singleLine = false)
         {
             ThrowIfNotSupported();
 
@@ -102,7 +120,7 @@ namespace ShareX
 
                 using (SoftwareBitmap softwareBitmap = await decoder.GetSoftwareBitmapAsync())
                 {
-                    OcrResult ocrResult = await engine.RecognizeAsync(softwareBitmap);
+                    Windows.Media.Ocr.OcrResult ocrResult = await engine.RecognizeAsync(softwareBitmap);
 
                     string separator;
 

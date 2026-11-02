@@ -131,7 +131,7 @@ ExifTool: https://exiftool.org
         {
             this.ForceActivate();
 
-            if (checkUpdate)
+            if (checkUpdate && !SystemOptions.DisableUpdateCheck)
             {
                 UpdateChecker updateChecker = Program.UpdateManager.CreateUpdateChecker();
                 await uclUpdate.CheckUpdate(updateChecker);

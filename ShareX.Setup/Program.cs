@@ -398,6 +398,13 @@ namespace ShareX.Setup
                 }
             }
 
+            // OCRoshka: the recognition engine ships its own Tesseract payload next to ShareX.exe.
+            string tesseractDir = Path.Combine(source, "tesseract");
+            if (Directory.Exists(tesseractDir))
+            {
+                FileHelpers.CopyAll(tesseractDir, Path.Combine(destination, "tesseract"));
+            }
+
             if (File.Exists(FFmpegPath))
             {
                 FileHelpers.CopyFiles(FFmpegPath, destination);

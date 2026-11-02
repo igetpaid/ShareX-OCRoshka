@@ -1,3 +1,53 @@
+# ShareX OCRoshka
+
+**Unofficial fork of [ShareX](https://github.com/ShareX/ShareX) 21.0.0 with genuinely better
+OCR.** The built-in Windows OCR is replaced by Tesseract 5.4.0 with Russian and English
+(`rus+eng`) in one pass, bundled into the portable build. Nothing else about ShareX changes.
+
+Русский: неофициальный форк ShareX с улучшенным распознаванием текста. Встроенный Windows OCR
+заменён на Tesseract 5.4.0 (`rus+eng`), Tesseract уже лежит внутри архива. Проверка обновлений
+отключена, чтобы официальное обновление не затёрло патч.
+
+## Download
+
+Take the latest **`ShareX-21.0.0-portable-x64.zip`** from
+[Releases](https://github.com/igetpaid/ShareX-OCRoshka/releases/latest), unpack it anywhere and
+run `ShareX.exe`. No installer and no .NET runtime needed.
+
+## What is different
+
+- `ShareX/Tools/OCR/OCRHelper.cs` calls the OCRoshka engine (`OCRoshka.Engine`) instead of
+  `Windows.Media.Ocr`. If Tesseract is missing, it falls back to the original Windows OCR.
+- `OCRoshka.Engine/` — the recognition engine: Tesseract CLI, adaptive second pass, and path
+  repair that only changes a path when the file system confirms it.
+- `ShareX/SystemOptions.cs` — update checks are always disabled. An official ShareX update would
+  replace this build and silently remove the improved OCR.
+- The portable package includes `tesseract/` next to `ShareX.exe`.
+
+## Build
+
+Requires .NET SDK 9 and Windows.
+
+```powershell
+dotnet build ShareX.sln -c Release -p:Platform=x64 --self-contained true
+```
+
+Put Tesseract 5.4.0 with `tessdata_best` into `ShareX\bin\Release\win-x64\tesseract`, then:
+
+```powershell
+ShareX.Setup\bin\Release\win-x64\ShareX.Setup.exe -job CreatePortable -platform x64
+```
+
+The result is `Output\ShareX-21.0.0-portable-x64.zip`.
+
+## Legal
+
+This is an unofficial fork, not affiliated with or endorsed by the ShareX Team. ShareX is
+licensed under GPL-3.0; this fork keeps the same license and all original copyright notices.
+Tesseract OCR is Apache-2.0; language data comes from `tessdata_best` (Apache-2.0).
+
+---
+
 <p align="center"><a href="https://getsharex.com"><img src="https://getsharex.com/img/ShareX_Banner.png" alt="ShareX Banner"/></a></p>
 <h3 align="center">Screen capture, file sharing and productivity tool</h3>
 <br>

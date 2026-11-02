@@ -40,7 +40,9 @@ namespace ShareX
 
         public static void UpdateSystemOptions()
         {
-            DisableUpdateCheck = GetSystemOptionBoolean("DisableUpdateCheck");
+            // A fork must never install the official ShareX build: that would replace the patched
+            // OCR and silently remove the only reason this fork exists.
+            DisableUpdateCheck = true;
             DisableUpload = GetSystemOptionBoolean("DisableUpload");
             DisableLogging = GetSystemOptionBoolean("DisableLogging");
             PersonalPath = GetSystemOptionString("PersonalPath");

@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--
+      Targets the Windows Desktop framework on purpose. ShareX ships as a self-contained app whose
+      deps.json pins System.Drawing.Common to an older package, so a separate NuGet reference here
+      would risk a version clash once this assembly is loaded from inside ShareX. Resolving the
+      drawing types from the shared framework keeps both sides on the same version.
+    -->
+    <TargetFramework>net9.0-windows10.0.22621.0</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <AssemblyName>OCRoshka.Engine</AssemblyName>
+    <RootNamespace>OCRoshka.Engine</RootNamespace>
+
+    <!--
+      Without an explicit version the assembly carries no FileVersion, and the installer then
+      reports the engine as "version unknown" right after it has successfully installed it.
+      The version is also what the runtime marker file records, so it decides when a repair
+      redeploys the engine.
+    -->
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+
+  </PropertyGroup>
+
+  <!--
+    A frequency dictionary was once embedded here to repair recognised text against a word list.
+    It never worked: a dictionary can tell a misspelling from a real word, but it cannot know what
+    was meant, so it swaps one wrong answer for another that merely looks plausible. The idea is
+    worth revisiting only with the Tesseract user-words mechanism, which feeds the vocabulary to the
+    recogniser instead of correcting it afterwards, and with Russian and English combined. For now
+    the engine carries no data, and stays around 40 KB.
+  -->
+</Project>
+
